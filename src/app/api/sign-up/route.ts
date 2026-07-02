@@ -3,7 +3,7 @@ import dbConnect from '@/lib/dbConnect';
 import UserModel from '@/models/User';
 import {signupSchema} from '@/schemas/signupSchema';
 import bcrypt from 'bcryptjs';
-import {sendEmail} from '@/app/helpers/sendEmail';
+import {sendEmail} from "../../../helpers/sendEmail"
 
 export async function POST(req: NextRequest) {
     try{
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
             if (!emailResp.success) {
                 return NextResponse.json({ success: false, error: "Failed to send verification email" }, { status: 500 });
             }
-            return NextResponse.json({success: true, message: "User verified successfully"}, {status: 200});
+            return NextResponse.json({success: true, message: "Email sent successfully"}, {status: 200});
         }
 
         const newUser = new UserModel({

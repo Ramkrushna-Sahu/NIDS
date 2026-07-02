@@ -50,8 +50,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         return () => mediaQuery.removeEventListener("change", handleChange)
     }, [])
     return(
-        <ThemeContext value={{ theme, setTheme }}>
+        <ThemeContext.Provider value={{ theme, setTheme }}>
             {children}
-        </ThemeContext>
+        </ThemeContext.Provider>
     )
 }

@@ -9,6 +9,9 @@ export interface User extends Document {
     emailVerifyTokenExpiry: Date | null;
     resetPasswordToken: string | null;
     resetPasswordTokenExpiry: Date | null;
+
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const UserSchema: Schema<User> = new Schema({

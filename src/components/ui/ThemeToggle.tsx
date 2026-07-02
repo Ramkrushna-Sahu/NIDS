@@ -33,7 +33,7 @@ export function ThemeToggle() {
             case "light":
                 return <Sun className="h-[1.2rem] w-[1.2rem] text-amber-500 transition-all" />
             case "dark":
-                return <Moon className="h-[1.2rem] w-[1.2rem] text-blue-400 transition-all" />
+                return <Moon className="h-[1.2rem] w-[1.2rem] text-violet-400 transition-all" />
             default:
                 return <Monitor className="h-[1.2rem] w-[1.2rem] text-zinc-500 dark:text-zinc-400 transition-all" />
         }
@@ -41,10 +41,10 @@ export function ThemeToggle() {
 
     return (
         <div className="relative inline-block text-left" ref={dropdownRef}>
-            {/* Main Trigger Button */}
+            
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center justify-center w-9 h-9 rounded-md border border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
+                className="flex items-center justify-center w-9 h-9 rounded-2xl border border-zinc-200 bg-white hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-800 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
                 aria-label="Toggle theme"
             >
                 {renderMainIcon()}
@@ -82,7 +82,7 @@ export function ThemeToggle() {
                             }`}
                     >
                         <div className="flex items-center gap-2">
-                            <Moon className="h-4 w-4 text-blue-400" />
+                            <Moon className="h-4 w-4 text-violet-400" />
                             <span>Dark</span>
                         </div>
                         {theme === "dark" && <Check className="h-3.5 w-3.5" />}
