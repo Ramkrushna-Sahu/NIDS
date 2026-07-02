@@ -6,9 +6,9 @@ export interface User extends Document {
     password: string;
     isVerified: boolean;
     emailVerifyToken: string | null;
-    emailVerifyTokenExpirey: Date | null;
+    emailVerifyTokenExpiry: Date | null;
     resetPasswordToken: string | null;
-    resetPasswordTokenExpirey: Date | null;
+    resetPasswordTokenExpiry: Date | null;
 }
 
 const UserSchema: Schema<User> = new Schema({
@@ -17,9 +17,9 @@ const UserSchema: Schema<User> = new Schema({
     password: { type: String, default:"" },
     isVerified: { type: Boolean, default: false },
     emailVerifyToken: { type: String, default: null },
-    emailVerifyTokenExpirey: { type: Date, default: null },
+    emailVerifyTokenExpiry: { type: Date, default: null },
     resetPasswordToken: { type: String, default: null },
-    resetPasswordTokenExpirey: { type: Date, default: null },
+    resetPasswordTokenExpiry: { type: Date, default: null },
 }, { timestamps: true });
 
 const UserModel = (mongoose.models.User as mongoose.Model<User>) || (mongoose.model<User>('User', UserSchema));
