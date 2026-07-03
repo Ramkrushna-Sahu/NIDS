@@ -37,7 +37,7 @@ export async function GET() {
 
         await dbConnect();
         const { data } = await axios.get(`${fastApiUrl}/live-stats`);
-
+        console.log(data)
         if (data.success && Array.isArray(data.recent_alerts) && data.recent_alerts.length > 0) {
             await saveAlertsToMongo(data.recent_alerts, session.user._id)
         }

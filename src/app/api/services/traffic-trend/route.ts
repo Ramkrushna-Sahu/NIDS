@@ -13,8 +13,8 @@ export async function GET() {
         }
 
         const { data } = await axios.get(`${fastApiUrl}/traffic-trend`);
-
-        return NextResponse.json({
+        console.log(data)
+        return NextResponse.json    ({
             success: true,
             data
         }, { status: 200 });
