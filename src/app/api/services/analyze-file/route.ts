@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
         const formData = await request.formData()
         const fastapiURL = process.env.FASTAPI_URL;
 
-        console.log(formData)
+        // console.log(formData)
 
         if (!fastapiURL) {
             return NextResponse.json({
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
                 "Content-Type":"multipart/form-data"
             }
         });
-
+        console.log("file analyzer: ", data)
         return NextResponse.json({success: true, data},{status: 200})
     }
     catch (error: any) { 
