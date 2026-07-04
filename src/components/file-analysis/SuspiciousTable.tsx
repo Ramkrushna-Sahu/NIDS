@@ -50,7 +50,7 @@ export default function SuspiciousTable({ records, onView }: { records: any[], o
                     <thead>
                         <tr className="border-b border-slate-100 dark:border-slate-800/60 text-slate-400 dark:text-slate-500 md:text-sm text-xs font-bold uppercase tracking-wider bg-slate-50/10 dark:bg-slate-900/5">
                             <th className="py-3 px-5">Record ID</th>
-                            <th className="py-3 px-4">Attack Vector Type</th>
+                            <th className="py-3 px-4">Attack Type</th>
                             <th className="py-3 px-4">Confidence</th>
                             <th className="py-3 px-5 text-right">Actions</th>
                         </tr>
