@@ -24,18 +24,18 @@ export default function SuspiciousTable({ records, onView }: { records: any[], o
 
     const getSeverityStyles = (confidence: number) => {
         if (confidence >= 90) return 'text-red-600 dark:text-red-400 font-bold';
-        if (confidence >= 70) return 'text-violet-600 dark:text-violet-400 font-bold';
-        return 'text-blue-600 dark:text-blue-400 font-bold';
+        if (confidence >= 70) return 'text-yellow-600 dark:text-yellow-400 font-bold';
+        return 'text-green-600 dark:text-green-400 font-bold';
     };
 
     return (
-        <div className="bg-white dark:bg-[#0f172a] rounded-xl border border-slate-100 dark:border-slate-800/80 shadow-sm overflow-hidden px-9">
+        <div className="bg-white dark:bg-[#0f172a] rounded-xl border border-slate-100 dark:border-slate-800/80 shadow-sm overflow-hidden md:px-9 px-3">
             
             <div className="px-5 py-4 border-b border-slate-50 dark:border-slate-800/60 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/20">
                 <div className="flex items-center gap-2">
                     <ShieldAlert className="w-4 h-4 text-violet-600 dark:text-violet-400" />
                     <div>
-                        <h3 className="font-bold text-sm tracking-wide text-slate-800 dark:text-slate-200 uppercase">
+                        <h3 className="font-bold md:text-sm text-xs tracking-wide text-slate-800 dark:text-slate-200 uppercase">
                             Suspicious Activity Log
                         </h3>
                     </div>
@@ -48,7 +48,7 @@ export default function SuspiciousTable({ records, onView }: { records: any[], o
             <div className="overflow-x-auto">
                 <table className="w-full border-collapse text-left">
                     <thead>
-                        <tr className="border-b border-slate-100 dark:border-slate-800/60 text-slate-400 dark:text-slate-500 text-sm font-bold uppercase tracking-wider bg-slate-50/10 dark:bg-slate-900/5">
+                        <tr className="border-b border-slate-100 dark:border-slate-800/60 text-slate-400 dark:text-slate-500 md:text-sm text-xs font-bold uppercase tracking-wider bg-slate-50/10 dark:bg-slate-900/5">
                             <th className="py-3 px-5">Record ID</th>
                             <th className="py-3 px-4">Attack Vector Type</th>
                             <th className="py-3 px-4">Confidence</th>
@@ -68,11 +68,11 @@ export default function SuspiciousTable({ records, onView }: { records: any[], o
                                 return (
                                     <tr 
                                         key={i} 
-                                        className="hover:bg-slate-50/40 dark:hover:bg-slate-800/20 transition-colors group"
+                                        className="hover:bg-slate-50/40 dark:hover:bg-slate-800/20 transition-colors group md:text-md text-sm"
                                     >
-                                        <td className="py-3 px-5 font-mono text-slate-600 dark:text-slate-400">
+                                        <td className="py-3 px-5  font-semibold text-slate-600 dark:text-slate-400">
                                             <div className="flex items-center gap-2">
-                                                <Terminal className="w-3.5 h-3.5 opacity-40 text-slate-400" />
+                                                <Terminal className="w-3.5 h-3.5 opacity-40 text-slate-600 dark:text-slate-400" />
                                                 <span>REC-{(Number(record.record_id) || 0) + 1}</span>
                                             </div>
                                         </td>
@@ -83,7 +83,7 @@ export default function SuspiciousTable({ records, onView }: { records: any[], o
                                             </span>
                                         </td>
                                         
-                                        <td className="py-3 px-4 font-mono text-slate-700 dark:text-slate-300">
+                                        <td className="py-3 px-4 font-semibold text-slate-700 dark:text-slate-300">
                                             {confValue}%
                                         </td>
                                         

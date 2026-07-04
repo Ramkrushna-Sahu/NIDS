@@ -10,8 +10,8 @@ export default function AnalysisCharts({ result }: { result: any }) {
     const totalCount = benignCount + attackCount;
 
     const pieData = [
-        { name: 'Normal Traffic', value: benignCount, color: '#8B5CF6' }, 
-        { name: 'Malicious Threats', value: attackCount, color: '#663399' }, 
+        { name: 'Normal Traffic', value: benignCount, color: '#10B981' }, 
+        { name: 'Malicious Threats', value: attackCount, color: '#EF4444' }, 
     ];
 
     // Premium multi-shade Violet matrix matching your application primary brand
@@ -33,13 +33,18 @@ export default function AnalysisCharts({ result }: { result: any }) {
     const CustomTooltip = ({ active, payload }: any) => {
         if (active && payload && payload.length) {
             const data = payload[0].payload;
+            
+            const titleText = data.type || data.name || payload[0].name || 'Metrics';
+            
+            const rawNumericValue = data.value !== undefined ? data.value : (data.count !== undefined ? data.count : payload[0].value);
+            const verifiedCount = typeof rawNumericValue === 'number' && !isNaN(rawNumericValue) ? rawNumericValue : 0;
+
             return (
-                <div className="bg-slate-950/95 border border-slate-800/80 backdrop-blur-md px-3 py-2 rounded-xl shadow-xl text-xs">
-                    <p className="font-bold text-slate-200 mb-1">{data.type}</p>
-                    <div className="flex items-center gap-2 font-mono">
-                        <span className="w-2 h-2 rounded-full" style={{ backgroundColor: data.color }} />
-                        <span className="text-slate-400">{data.name}</span>
-                        <span className="font-bold text-white">{Number(data.value).toLocaleString()}</span>
+                <div className="bg-slate-950/95 border border-slate-800/80 backdrop-blur-md px-3 py-2 rounded-xl shadow-xl text-xs font-mono">
+                    <p className="font-bold text-slate-200 mb-1">{titleText}</p>
+                    <div className="flex items-center gap-2 ">
+                        <span className="w-2 h-2 rounded-full" style={{ backgroundColor: data.color || '#7c3aed' }} />
+                        <span className="font-bold text-white">{verifiedCount.toLocaleString()}</span>
                     </div>
                 </div>
             );
@@ -50,20 +55,20 @@ export default function AnalysisCharts({ result }: { result: any }) {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
-            <div className="lg:col-span-5 bg-white dark:bg-[#0f172a] p-5 sm:p-6 rounded-2xl border border-gray-100 dark:border-slate-800/80 shadow-sm flex flex-col justify-between">
+            <div className="lg:col-span-5 bg-white dark:bg-[#0f172a] p-5 sm:p-6 rounded-2xl border border-gray-100 dark:border-slate-800/80 shadow-sm flex flex-col justify-between hover:shadow hover:shadow-violet-400">
                 <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-slate-400">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-slate-300">
                         Traffic Distribution
                     </h3>
-                    <p className="text-xs text-gray-600 mt-0.5">Ratio of clean to anomalous network streams</p>
+                    <p className="text-xs text-gray-600 dark:text-slate-300 mt-0.5">Ratio of clean to anomalous network streams</p>
                 </div>
 
                 <div className="h-65 w-full relative flex items-center justify-center my-2">
                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none mt-2">
-                        <span className="text-2xl sm:text-3xl font-extrabold font-mono tracking-tight text-gray-900 dark:text-white">
+                        <span className="text-2xl sm:text-3xl font-bold  tracking-tight text-gray-900 dark:text-white">
                             {totalCount}
                         </span>
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
                             Total Flows
                         </span>
                     </div>
@@ -97,9 +102,9 @@ export default function AnalysisCharts({ result }: { result: any }) {
                     {pieData.map((item, i) => (
                         <div key={i} className="flex items-center gap-2">
                             <span className="w-2.5 h-2.5 rounded-md shrink-0" style={{ backgroundColor: item.color }} />
-                            <div className="flex flex-col">
-                                <span className="text-sm font-semibold text-gray-800 dark:text-slate-400 leading-none">{item.name}</span>
-                                <span className="text-sm font-bold font-mono text-gray-800 dark:text-slate-200 mt-0.5">
+                            <div className="flex flex-col md:text-sm text-xs">
+                                <span className="font-semibold text-gray-800 dark:text-slate-400 leading-none">{item.name}</span>
+                                <span className="font-bold  text-gray-800 dark:text-slate-200 mt-0.5">
                                     {totalCount > 0 ? ((item.value / totalCount) * 100).toFixed(1) : 0}%
                                 </span>
                             </div>
@@ -108,12 +113,12 @@ export default function AnalysisCharts({ result }: { result: any }) {
                 </div>
             </div>
 
-            <div className="lg:col-span-7 bg-white dark:bg-[#0f172a] p-5 sm:p-6 rounded-2xl border border-gray-100 dark:border-slate-800/80 shadow-sm flex flex-col justify-between">
+            <div className="lg:col-span-7 bg-white dark:bg-[#0f172a] p-5 sm:p-6 rounded-2xl border border-gray-100 dark:border-slate-800/80 shadow-sm flex flex-col justify-between hover:shadow hover:shadow-violet-400">
                 <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-slate-400">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-slate-300">
                         Attack Vector Classification
                     </h3>
-                    <p className="text-xs text-gray-600 mt-0.5">Volume signature across detected threat variations</p>
+                    <p className="text-xs text-gray-600 dark:text-slate-300 mt-0.5">Volume signature across detected threat variations</p>
                 </div>
 
                 {barData.length === 0 ? (
@@ -131,7 +136,7 @@ export default function AnalysisCharts({ result }: { result: any }) {
                                 <XAxis 
                                     dataKey="type" 
                                     stroke="#64748b" 
-                                    fontSize={10} 
+                                    fontSize={12} 
                                     fontWeight={500}
                                     tickLine={false}
                                     axisLine={false}
@@ -141,7 +146,7 @@ export default function AnalysisCharts({ result }: { result: any }) {
                                 />
                                 <YAxis 
                                     stroke="#64748b" 
-                                    fontSize={10} 
+                                    fontSize={12} 
                                     tickLine={false}
                                     axisLine={false}
                                     allowDecimals={false}
@@ -155,7 +160,7 @@ export default function AnalysisCharts({ result }: { result: any }) {
                                     label={{ 
                                         position: 'top', 
                                         fill: '#7c3aed', 
-                                        fontSize: 10, 
+                                        fontSize: 12, 
                                         fontWeight: 'bold',
                                         fontFamily: 'monospace',
                                         dy: -8
