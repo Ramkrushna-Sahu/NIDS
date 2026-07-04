@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
                 "Content-Type":"multipart/form-data"
             }
         });
-        console.log("file analyzer: ", data)
+        // console.log("file analyzer: ", data)
         return NextResponse.json({success: true, data},{status: 200})
     }
     catch (error: any) { 
