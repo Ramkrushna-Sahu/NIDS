@@ -12,7 +12,7 @@ export default function LiveCharts({ liveStats, trafficTrend }: { liveStats: any
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             
-            <div className="bg-white dark:bg-[#0f172a] rounded-2xl border border-gray-100 dark:border-slate-800/80 shadow-sm overflow-hidden flex flex-col">
+            <div className="bg-white dark:bg-[#0f172a] rounded-2xl border border-gray-100 dark:border-slate-800/80 shadow-sm overflow-hidden flex flex-col hover:shadow hover:shadow-violet-400">
                 <div className="px-6 py-5 border-b border-gray-100 dark:border-slate-800/80 bg-gray-50/50 dark:bg-[#1e293b]/30 flex items-center gap-2">
                     <Activity size={18} className="text-blue-500" />
                     <h3 className="font-bold text-base tracking-tight text-gray-900 dark:text-white">Live Traffic Trend</h3>
@@ -70,7 +70,7 @@ export default function LiveCharts({ liveStats, trafficTrend }: { liveStats: any
                 </div>
             </div>
 
-            <div className="bg-white dark:bg-[#0f172a] rounded-2xl border border-gray-100 dark:border-slate-800/80 shadow-sm overflow-hidden flex flex-col">
+            <div className="bg-white dark:bg-[#0f172a] rounded-2xl border border-gray-100 dark:border-slate-800/80 shadow-sm overflow-hidden flex flex-col hover:shadow hover:shadow-violet-400">
                 <div className="px-6 py-5 border-b border-gray-100 dark:border-slate-800/80 bg-gray-50/50 dark:bg-[#1e293b]/30 flex items-center gap-2">
                     <BarChart3 size={18} className="text-red-500" />
                     <h3 className="font-bold text-base tracking-tight text-gray-900 dark:text-white">Attack Frequency</h3>
