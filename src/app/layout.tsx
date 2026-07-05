@@ -3,8 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../context/ThemeProvider";
 import Navbar from "@/components/navbar/Navbar";
-import ToastProvider  from "@/context/ToastProvider";
+import ToastProvider from "@/context/ToastProvider";
 import AuthProvider from "@/context/AuthProvider";
+import { MonitoringProvider } from "@/context/MonitoringContext";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,16 +52,18 @@ export default function RootLayout({
           }}
         />
       </head>
-      <ThemeProvider>
-        <AuthProvider>
-          <body className="min-h-full flex flex-col">
-            <ToastProvider>
-              <Navbar />
-              {children}
-            </ToastProvider>
-          </body>
-        </AuthProvider>
-      </ThemeProvider>
+      <body className="min-h-full flex flex-col">
+        <ThemeProvider>
+          <AuthProvider>
+            <MonitoringProvider>
+              <ToastProvider>
+                <Navbar />
+                {children}
+              </ToastProvider>
+            </MonitoringProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

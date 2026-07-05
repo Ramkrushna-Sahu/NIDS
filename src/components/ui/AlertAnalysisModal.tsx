@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom'; 
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, } from 'recharts';
-import { X, ShieldAlert, Cpu, BarChart3, Clock, Percent, Activity, Network, ChevronDown, ChevronUp, Eye} from 'lucide-react';
+import { X, ShieldAlert, Cpu, BarChart3, Clock, Percent, Activity, Network, ChevronDown, ChevronUp, Eye, Globe, MapPin, Server, Zap } from 'lucide-react';
 
 interface AlertAnalysisModalProps {
     isOpen: boolean;
@@ -70,7 +70,6 @@ export default function AlertAnalysisModal({ isOpen, onClose, alertData }: Alert
         color: item.impact > 0 ? "#ef4444" : "#10b981"
     })) || [];
 
-    
     return createPortal(
         <div 
             onClick={(e) => {
@@ -150,6 +149,40 @@ export default function AlertAnalysisModal({ isOpen, onClose, alertData }: Alert
                         </div>
                     </div>
 
+                    {alertData.flow_info && (
+                        <div className="p-4 sm:p-5 bg-gray-50 dark:bg-[#1e293b]/40 border border-gray-100 dark:border-slate-800/60 rounded-xl">
+                            <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-slate-400 flex items-center gap-2 mb-4">
+                                <Server size={14} /> Network Flow Context
+                            </h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div className="space-y-3">
+                                    <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-slate-300">
+                                        <Globe size={14} className="text-slate-400" />
+                                        <span className="text-gray-400">Source IP:</span> 
+                                        <span className="font-mono font-bold text-gray-800 dark:text-white">{alertData.flow_info.source_ip}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-slate-300">
+                                        <MapPin size={14} className="text-slate-400" />
+                                        <span className="text-gray-400">Destination IP:</span> 
+                                        <span className="font-mono font-bold text-gray-800 dark:text-white">{alertData.flow_info.destination_ip}</span>
+                                    </div>
+                                </div>
+                                <div className="space-y-3">
+                                    <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-slate-300">
+                                        <Zap size={14} className="text-slate-400" />
+                                        <span className="text-gray-400">Destination Port:</span> 
+                                        <span className="font-mono font-bold text-gray-800 dark:text-white">{alertData.flow_info.destination_port}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-slate-300">
+                                        <Network size={14} className="text-slate-400" />
+                                        <span className="text-gray-400">Protocol:</span> 
+                                        <span className="font-mono font-bold uppercase text-gray-800 dark:text-white">{alertData.flow_info.protocol}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {loading && (
                         <div className="flex flex-col items-center justify-center py-16 space-y-3">
                             <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
@@ -165,7 +198,6 @@ export default function AlertAnalysisModal({ isOpen, onClose, alertData }: Alert
 
                     {analysis?.top_features && !loading && (
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                            
                             <div className="lg:col-span-7 space-y-3">
                                 <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-slate-400 flex items-center gap-2">
                                     <BarChart3 size={14} /> Explainable AI Feature Impact Weights (SHAP)
@@ -196,14 +228,8 @@ export default function AlertAnalysisModal({ isOpen, onClose, alertData }: Alert
                                                     fontSize: '11px',
                                                     padding: '8px 12px'
                                                 }} 
-                                                labelStyle={{
-                                                    color: '#f8fafc',
-                                                    fontWeight: 'bold',
-                                                    marginBottom: '4px'
-                                                }}
-                                                itemStyle={{
-                                                    color: '#f8fafc'
-                                                }}
+                                                labelStyle={{ color: '#f8fafc', fontWeight: 'bold', marginBottom: '4px' }}
+                                                itemStyle={{ color: '#f8fafc' }}
                                             />
                                             <Bar dataKey="impact" radius={4} barSize={14}>
                                                 {chartData.map((entry: any, index: number) => (
@@ -243,7 +269,6 @@ export default function AlertAnalysisModal({ isOpen, onClose, alertData }: Alert
                                     })}
                                 </div>
                             </div>
-
                         </div>
                     )}
 
@@ -275,7 +300,6 @@ export default function AlertAnalysisModal({ isOpen, onClose, alertData }: Alert
                     </div>
                 </div>
                 
-                
                 <div className="px-4 sm:px-6 py-3.5 bg-gray-50/50 dark:bg-[#1e293b]/20 border-t border-gray-100 dark:border-slate-800/80 flex justify-end">
                     <button 
                         onClick={onClose}
@@ -284,184 +308,8 @@ export default function AlertAnalysisModal({ isOpen, onClose, alertData }: Alert
                         Close
                     </button>
                 </div>
-
             </div>
         </div>,
         document.body
     );
 }
-
-
-
-
-
-// 'use client';
-// import { useEffect, useState, useCallback } from 'react';
-// import axios from 'axios';
-// import { 
-//     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
-//     ResponsiveContainer, Cell 
-// } from 'recharts';
-
-// interface AlertAnalysisModalProps {
-//     isOpen: boolean;
-//     onClose: () => void;
-//     alertData: any;
-// }
-
-// export default function AlertAnalysisModal({ isOpen, onClose, alertData }: AlertAnalysisModalProps) {
-//     const [analysis, setAnalysis] = useState<any>(null);
-//     const [loading, setLoading] = useState(false);
-//     const [error, setError] = useState<string | null>(null);
-
-//     const fetchAnalysis = useCallback(async () => {
-//         if (!alertData?.features) {
-//             setError("No feature data available");
-//             return;
-//         }
-
-//         setLoading(true);
-//         setError(null);
-
-//         try {
-//             const features = alertData.features;
-//             const payload = {
-//                 average_packet_size: features["Average Packet Size"],
-//                 max_packet_length: features["Max Packet Length"],
-//                 flow_duration: features["Flow Duration"] || 0,
-//                 destination_port: features["Destination Port"] || 0
-//             };
-
-//             const res = await axios.post('/api/services/predict', payload);
-//             if (res.data.success) {
-//                 setAnalysis(res.data.data || res.data);
-//             }
-//         } catch (err: any) {
-//             console.error(err);
-//             setError("Failed to generate SHAP analysis");
-//         } finally {
-//             setLoading(false);
-//         }
-//     }, [alertData]);
-
-//     useEffect(() => {
-//         if (isOpen && alertData) fetchAnalysis();
-//     }, [isOpen, alertData, fetchAnalysis]);
-
-//     if (!isOpen || !alertData) return null;
-
-//     const chartData = analysis?.top_features?.map((item: any) => ({
-//         feature: item.feature.length > 15 
-//             ? item.feature.substring(0, 15) + "..." 
-//             : item.feature,
-//         impact: Number(item.impact),
-//         color: item.impact > 0 ? "#ef4444" : "#22c55e"
-//     })) || [];
-
-//     return (
-//         <div className="fixed inset-0 bg-black/70 z-100 flex items-center justify-center p-4">
-//             <div className="bg-white dark:bg-gray-900 rounded-3xl w-full max-w-4xl max-h-[95vh] overflow-hidden shadow-2xl flex flex-col">
-                
-//                 {/* Header */}
-//                 <div className="px-6 md:px-8 py-5 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-white dark:bg-gray-900 sticky top-0 z-10">
-//                     <div>
-//                         <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">Attack Investigation</h2>
-//                         <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
-//                             Flow ID: {alertData.flow_id || alertData.flowId || 'N/A'}
-//                         </p>
-//                     </div>
-//                     <button 
-//                         onClick={onClose} 
-//                         className="text-3xl md:text-4xl text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-//                     >
-//                         ×
-//                     </button>
-//                 </div>
-
-//                 <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8">
-//                     {/* Basic Info */}
-//                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-//                         <div>
-//                             <p className="text-gray-500 dark:text-gray-400">Timestamp</p>
-//                             <p className="font-medium">{alertData.timestamp}</p>
-//                         </div>
-//                         <div>
-//                             <p className="text-gray-500 dark:text-gray-400">Attack Type</p>
-//                             <p className="font-bold text-red-600">{alertData.prediction || alertData.attackType}</p>
-//                         </div>
-//                         <div>
-//                             <p className="text-gray-500 dark:text-gray-400">Confidence</p>
-//                             <p className="font-bold">{alertData.confidence}%</p>
-//                         </div>
-//                         <div>
-//                             <p className="text-gray-500 dark:text-gray-400">Severity</p>
-//                             <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
-//                                 alertData.severity === 'High' ? 'bg-red-100 text-red-700 dark:bg-red-900/30' : 
-//                                 alertData.severity === 'Medium' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30' : 
-//                                 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30'
-//                             }`}>
-//                                 {alertData.severity}
-//                             </span>
-//                         </div>
-//                     </div>
-
-//                     {loading && <p className="text-center py-12 text-gray-500">Generating SHAP Analysis...</p>}
-//                     {error && <p className="text-red-500 text-center py-8">{error}</p>}
-
-//                     {analysis?.top_features && (
-//                         <>
-//                             {/* SHAP Bar Chart - Better for Mobile */}
-//                             <div>
-//                                 <h3 className="font-semibold mb-4 text-lg">Feature Impact (SHAP)</h3>
-//                                 <div className="h-72 md:h-80 bg-gray-50 dark:bg-gray-800 rounded-2xl p-3 md:p-4">
-//                                     <ResponsiveContainer width="100%" height="100%">
-//                                         <BarChart 
-//                                             data={chartData} 
-//                                             layout="vertical" 
-//                                             margin={{ left: 10, right: 20, top: 10, bottom: 10 }}
-//                                         >
-//                                             <CartesianGrid strokeDasharray="3 3" />
-//                                             <XAxis type="number" />
-//                                             <YAxis 
-//                                                 type="category" 
-//                                                 dataKey="feature" 
-//                                                 width={130} 
-//                                                 fontSize={12}
-//                                             />
-//                                             <Tooltip />
-//                                             <Bar dataKey="impact" radius={6}>
-//                                                 {chartData.map((entry: any, index: number) => (
-//                                                     <Cell key={index} fill={entry.color} />
-//                                                 ))}
-//                                             </Bar>
-//                                         </BarChart>
-//                                     </ResponsiveContainer>
-//                                 </div>
-//                             </div>
-
-//                             {/* Top Features */}
-//                             <div>
-//                                 <h3 className="font-semibold mb-4 text-lg">Top Contributing Factors</h3>
-//                                 <div className="space-y-4">
-//                                     {analysis.top_features.map((item: any, i: number) => (
-//                                         <div key={i} className="flex items-center justify-between bg-gray-50 dark:bg-gray-800 p-5 rounded-2xl">
-//                                             <div className="flex-1 pr-4">
-//                                                 <p className="font-medium text-sm md:text-base">{item.feature}</p>
-//                                                 <p className="text-xs md:text-sm text-gray-500 capitalize">
-//                                                     {item.direction.replace('_', ' ')}
-//                                                 </p>
-//                                             </div>
-//                                             <p className={`font-mono text-lg md:text-xl font-bold ${item.impact > 0 ? 'text-red-500' : 'text-green-500'}`}>
-//                                                 {item.impact > 0 ? '+' : ''}{item.impact}
-//                                             </p>
-//                                         </div>
-//                                     ))}
-//                                 </div>
-//                             </div>
-//                         </>
-//                     )}
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
