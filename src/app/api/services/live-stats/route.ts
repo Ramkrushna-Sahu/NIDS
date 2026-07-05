@@ -11,6 +11,12 @@ interface LiveAlert {
     confidence: number;
     severity: "Low" | "Medium" | "High";
     timestamp: string;
+    flow_info: {
+        source_ip: string;
+        destination_ip: string;
+        destination_port: number;
+        protocol: string;
+    };
     features: {
         "Average Packet Size": number;
         "Max Packet Length": number;
@@ -66,6 +72,12 @@ async function saveAlertsToMongo(alerts: LiveAlert[], userId: string) {
                     confidence: alert.confidence,
                     severity: alert.severity,
                     timestamp: new Date(alert.timestamp),
+                    flowInfo: {
+                        sourceIp: alert.flow_info.source_ip,
+                        destinationIp: alert.flow_info.destination_ip,
+                        destinationPort: alert.flow_info.destination_port,
+                        protocol: alert.flow_info.protocol,
+                    },
                     features: alert.features,
                     source: "Realtime",
                     status: "New",

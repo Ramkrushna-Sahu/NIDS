@@ -7,6 +7,12 @@ export interface Alert extends Document {
     confidence: number;
     severity: "Low" | "Medium" | "High";
     timestamp: Date;
+    flowInfo: {
+        sourceIp: string;
+        destinationIp: string;
+        destinationPort: number;
+        protocol: string;
+    };
     features: {
         "Average Packet Size": number;
         "Max Packet Length": number;
@@ -27,6 +33,15 @@ const AlertSchema: Schema<Alert> = new Schema({
         confidence: {type: Number,required: true,},
         severity: {type: String,enum: ["Low", "Medium", "High"],required: true,},
         timestamp: {type: Date},
+        flowInfo: {
+            type: {
+                sourceIp: String,
+                destinationIp: String,
+                destinationPort: Number,
+                protocol: String,
+            },
+            required: true,
+        },
         features: {
             type: {
                 "Average Packet Size": Number,
