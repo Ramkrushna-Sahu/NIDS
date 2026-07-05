@@ -24,18 +24,20 @@ export function MonitoringProvider({ children }: { children: ReactNode }) {
 
     const fetchData = async () => {
         try {
-            const [statsRes, trendRes] = await Promise.all([
-                axios.get('/api/services/live-stats'),
-                axios.get('/api/services/traffic-trend')
-            ]);
-
+            const statsRes = await axios.get('/api/services/live-stats');
             if (statsRes.data.success) {
                 const stats = statsRes.data.data;
                 setLiveStats(stats);
                 setIsMonitoring(stats.monitoring || false);
             }
-            if (trendRes.data.success) {
-                setTrafficTrend(trendRes.data.data);
+
+            try {
+                const trendRes = await axios.get('/api/services/traffic-trend');
+                if (trendRes.data.success) {
+                    setTrafficTrend(trendRes.data.data);
+                }
+            } catch (trendErr) {
+                console.warn("Traffic trend fetch failed");
             }
         } catch (err) {
             console.error("Monitoring data fetch failed", err);
