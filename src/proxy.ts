@@ -5,7 +5,7 @@ import { getToken } from 'next-auth/jwt'
 // 1. Define arrays for route categories. Easily add more in the future.
 const AUTH_PAGES = ["/sign-in", "/sign-up", "/verify-email", "/reset-password", "/forgot-password"];
 
-const PROTECTED_PREFIXES = ["/dashboard", "/profile", "file-analysis"];
+const PROTECTED_PREFIXES = ["/dashboard", "/profile", "file-analysis", "/real-time-monitoring"];
 
 export async function proxy(request: NextRequest) {
     const token = await getToken({ req: request })
